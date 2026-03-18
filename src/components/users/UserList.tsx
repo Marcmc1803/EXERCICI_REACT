@@ -1,4 +1,5 @@
-import { User } from "../services/user-service";
+import { User } from '../../models/User';
+import Button from '../Button/Button';
 
 interface Props {
   users: User[];
@@ -6,6 +7,10 @@ interface Props {
   onDelete: (user: User) => void;
 }
 
+/**
+ * UserList component - Displays a list of users
+ * Handles only rendering, logic is managed by parent component
+ */
 const UserList = ({ users, onEdit, onDelete }: Props) => {
   const getOrganizationName = (organizacion: User['organizacion']) => {
     if (typeof organizacion === 'object' && organizacion !== null) {
@@ -17,7 +22,10 @@ const UserList = ({ users, onEdit, onDelete }: Props) => {
   return (
     <ul className="list-group">
       {users.map((user) => (
-        <li key={user._id} className="list-group-item d-flex justify-content-between align-items-center">
+        <li
+          key={user._id}
+          className="list-group-item d-flex justify-content-between align-items-center"
+        >
           <div>
             <span className="fw-bold">{user.name}</span>
             <span className="mx-2 text-muted">|</span>
@@ -28,18 +36,19 @@ const UserList = ({ users, onEdit, onDelete }: Props) => {
             </span>
           </div>
           <div>
-            <button
-              className="btn btn-outline-secondary mx-1"
+            <Button
+              className="mx-1"
+              color="secondary"
               onClick={() => onEdit(user)}
             >
               Edit
-            </button>
-            <button
-              className="btn btn-outline-danger"
+            </Button>
+            <Button
+              color="danger"
               onClick={() => onDelete(user)}
             >
               Delete
-            </button>
+            </Button>
           </div>
         </li>
       ))}

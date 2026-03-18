@@ -1,8 +1,4 @@
 import create from "./http-service";
-
-export interface Organization {
-  _id: string;
-  name: string;
-}
+import { Organization } from "../models/Organization";
 
 export default create('/organizaciones');

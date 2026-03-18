@@ -1,4 +1,5 @@
-import { Organization } from "../services/organization-service";
+import { Organization } from '../../models/Organization';
+import Button from '../Button/Button';
 
 interface Props {
   organizations: Organization[];
@@ -6,29 +7,37 @@ interface Props {
   onDelete: (organization: Organization) => void;
 }
 
+/**
+ * OrganizationList component - Displays a list of organizations
+ * Handles only rendering, logic is managed by parent component
+ */
 const OrganizationList = ({ organizations, onEdit, onDelete }: Props) => {
   return (
     <ul className="list-group">
       {organizations.map((org) => (
-        <li key={org._id} className="list-group-item d-flex justify-content-between align-items-center">
+        <li
+          key={org._id}
+          className="list-group-item d-flex justify-content-between align-items-center"
+        >
           <div>
             <span className="fw-bold">{org.name}</span>
             <span className="mx-2 text-muted">|</span>
             <small className="text-muted">ID: {org._id}</small>
           </div>
           <div>
-            <button
-              className="btn btn-outline-secondary mx-1"
+            <Button
+              className="mx-1"
+              color="secondary"
               onClick={() => onEdit(org)}
             >
               Edit
-            </button>
-            <button
-              className="btn btn-outline-danger"
+            </Button>
+            <Button
+              color="danger"
               onClick={() => onDelete(org)}
             >
               Delete
-            </button>
+            </Button>
           </div>
         </li>
       ))}

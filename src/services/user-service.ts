@@ -1,12 +1,5 @@
 import create from "./http-service";
-import { Organization } from "./organization-service";
-
-export interface User {
-  _id: string;
-  name: string;
-  email: string;
-  organizacion: Organization | string; // Can be a full object or just an ID string
-  password?: string;
-}
+import { User } from "../models/User";
+import { Organization } from "../models/Organization";
 
 export default create('/usuarios');

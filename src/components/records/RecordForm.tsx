@@ -9,15 +9,8 @@ import Button from '../Button/Button';
 const schema = z.object({
   name: z.string().min(3, { message: 'Name must be at least 3 characters.' }),
   email: z.string().email({ message: 'Invalid email address.' }),
-  organization: z
-    .string()
-    .min(1, { message: 'Please select an organization.' }),
-  password: z
-    .union([
-      z.string().min(6, { message: 'Password must be at least 6 characters.' }),
-      z.literal(''),
-    ])
-    .optional(),
+  organization: z.string().min(1, { message: 'Please select an organization.' }),
+  password: z.union([z.string().min(6, { message: 'Password must be at least 6 characters.' }),z.literal('')]).optional(),
 });
 
 export type UserFormData = z.infer<typeof schema>;
@@ -34,12 +27,7 @@ interface Props {
  * Handles only form rendering and validation, logic is managed by parent component
  */
 const RecordForm = ({ onSubmit, initialData, onCancel, organizations }: Props) => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<UserFormData>({ resolver: zodResolver(schema) });
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<UserFormData>({ resolver: zodResolver(schema) });
 
   useEffect(() => {
     if (initialData) {

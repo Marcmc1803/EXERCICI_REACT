@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import userService from '../services/user-service';
 import organizationService from '../services/organization-service';
+import activityService from '../services/activity-service';
 import { CanceledError } from '../services/api-client';
 import { User } from '../models/User';
 import { Organization } from '../models/Organization';
@@ -77,6 +78,15 @@ export const useUser = (): UseUsersReturn => {
       setUsers((prevUsers) =>
         prevUsers.map((u) => (u._id === tempUser._id ? savedUser : u))
       );
+      
+      // Log activity
+      activityService.create({
+        action: 'CREATE',
+        entityType: 'USER',
+        entityId: savedUser._id,
+        description: `Created user: ${savedUser.name}`,
+        timestamp: new Date().toISOString()
+      });
     } catch (err) {
       setError((err as Error).message);
       setUsers(originalUsers);
@@ -90,6 +100,15 @@ export const useUser = (): UseUsersReturn => {
 
     try {
       await userService.update(user);
+      
+      // Log activity
+      activityService.create({
+        action: 'UPDATE',
+        entityType: 'USER',
+        entityId: user._id,
+        description: `Updated user: ${user.name}`,
+        timestamp: new Date().toISOString()
+      });
     } catch (err) {
       setError((err as Error).message);
       setUsers(originalUsers);
@@ -103,6 +122,15 @@ export const useUser = (): UseUsersReturn => {
 
     try {
       await userService.delete(userId);
+      
+      // Log activity
+      activityService.create({
+        action: 'DELETE',
+        entityType: 'USER',
+        entityId: userId,
+        description: `Deleted user with ID: ${userId}`,
+        timestamp: new Date().toISOString()
+      });
     } catch (err) {
       setError((err as Error).message);
       setUsers(originalUsers);

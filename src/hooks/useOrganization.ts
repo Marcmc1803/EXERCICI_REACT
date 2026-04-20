@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import organizationService from '../services/organization-service';
+import activityService from '../services/activity-service';
 import { CanceledError } from '../services/api-client';
 import { Organization } from '../models/Organization';
 
@@ -59,6 +60,15 @@ export const useOrganization = (): UseOrganizationsReturn => {
       setOrganizations((prevOrgs) =>
         prevOrgs.map((o) => (o._id === tempOrg._id ? savedOrg : o))
       );
+      
+      // Log activity
+      activityService.create({
+        action: 'CREATE',
+        entityType: 'ORGANIZATION',
+        entityId: savedOrg._id,
+        description: `Created organization: ${savedOrg.name}`,
+        timestamp: new Date().toISOString()
+      });
     } catch (err) {
       setError((err as Error).message);
       setOrganizations(originalOrganizations);
@@ -74,6 +84,15 @@ export const useOrganization = (): UseOrganizationsReturn => {
 
     try {
       await organizationService.update(organization);
+      
+      // Log activity
+      activityService.create({
+        action: 'UPDATE',
+        entityType: 'ORGANIZATION',
+        entityId: organization._id,
+        description: `Updated organization: ${organization.name}`,
+        timestamp: new Date().toISOString()
+      });
     } catch (err) {
       setError((err as Error).message);
       setOrganizations(originalOrganizations);
@@ -87,6 +106,15 @@ export const useOrganization = (): UseOrganizationsReturn => {
 
     try {
       await organizationService.delete(organizationId);
+      
+      // Log activity
+      activityService.create({
+        action: 'DELETE',
+        entityType: 'ORGANIZATION',
+        entityId: organizationId,
+        description: `Deleted organization with ID: ${organizationId}`,
+        timestamp: new Date().toISOString()
+      });
     } catch (err) {
       setError((err as Error).message);
       setOrganizations(originalOrganizations);

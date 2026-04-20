@@ -10,7 +10,7 @@ Per integrar aquesta nova funcionalitat, s'han utilitzat les següents peticions
 2.  **Modelatge**: *"Necessito un model de TypeScript per a una `Activity` que contingui l'acció realitzada, la data i l'entitat afectada. Em pots ajudar amb la interfície?"*
 3.  **Creació del Servei**: *"A partir de la meva factoria `HttpService` actual, podries crear el nou `ActivityService` que es connecti a l'endpoint de l'historial?"*
 4.  **Integració en la lògica existent**: *"Com puc modificar els meus hooks actuals (`useUser` i `useOrganization`) perquè enregistrin una entrada a l'historial cada vegada que una operació de crear, editar o esborrar es completi amb èxit?"*
-5.  **Disseny de la Interfície**: *"Implementa un component de llista per a l'historial que permeti filtrar i cercar accions, utilitzant els estils de Bootstrap que ja fem servir al projecte."*
+5.  **Disseny de la Interfície**: *"Implementa un component de llista per a l'historial que permeti filtrar i cercar accions, utilitzant els estils que ja fem servir al projecte."*
 
 Aquest enfocament ha permès integrar una funcionalitat complexa de traçabilitat de forma modular i segura, respectant l'arquitectura original del projecte.
 
